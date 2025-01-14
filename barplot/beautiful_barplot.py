@@ -4,7 +4,8 @@ import seaborn as sns
 def create_barplot(numbers, labels, sort_by='number', color_by='number', annotate=True, font_size=14, x_axis_font_size=14, y_axis_font_size=14, orientation='horizontal',
                    color_style="rocket"):  
     # Combine numbers and labels into a single list of tuples  
-
+    # set figure size
+    plt.figure(figsize=(5, 5))
     color_style_list = ["viridis", "magma", "plasma","inferno",
                    "cividis", "rocket"]
     assert color_style in color_style_list, "the color theme is not in the color list provided"
@@ -48,10 +49,26 @@ def create_barplot(numbers, labels, sort_by='number', color_by='number', annotat
                 ax.text(number, i, f"{number}", ha='left', va='center')  
       
     # Show the barplot  
-    plt.show()  
+    plt.show()
   
 # Example usage  
-numbers = [25, 30, 50, 15, 45]  
-labels = ['A', 'B', 'C', 'D', 'E']  
+#numbers = [25, 30, 50, 15, 45]  
+#labels = ['A', 'B', 'C', 'D', 'E']  
+
+'''
+Before drop duplicates:  (193, 27)
+After drop duplicates:  (149, 27)
+'''
+'''
+AUC 	F1 	Acc 	Precision 	Recall
+A 	0.998121 	0.970208 	0.987064 	0.966047 	0.974405
+E 	0.997731 	0.809524 	0.998753 	0.739130 	0.894737
+N 	0.999046 	0.988244 	0.987921 	0.987720 	0.988769
+S 	0.999169 	0.991353 	0.995402 	0.997052 	0.985718
+'''
+# change the order of these two
+numbers = [87.02, 80.95, 98.82,85.13 ]
+labels = [ 'Adeno\ncarcinoma', 'Squamous', 'Others', 'Epithelial']
   
-create_barplot(numbers, labels, sort_by='number', color_by='number', annotate=True, font_size=14, x_axis_font_size=12, y_axis_font_size=12, orientation='vertical')  
+create_barplot(numbers, labels, sort_by='number', color_by='number', annotate=True, font_size=20, 
+               x_axis_font_size=20, y_axis_font_size=20, orientation='vertical')  

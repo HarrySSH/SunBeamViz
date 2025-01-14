@@ -2,7 +2,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def piechart(number_list, cell_types, centre_circle=0.5, line_guide=False):
+def piechart(number_list, cell_types, centre_circle=0.5, line_guide=False,
+             image_name='piechart.png'):
     
     # Pie chart, where the slices will be ordered and plotted counter-clockwise
     # the label will be similar to the function above
@@ -30,7 +31,8 @@ def piechart(number_list, cell_types, centre_circle=0.5, line_guide=False):
     # add another not important color for the other cells
     
     
-    
+    explode = explode[:len(number_list)]
+    COLORS = COLORS[:len(number_list)]
     
     if not line_guide:
         ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
@@ -48,10 +50,10 @@ def piechart(number_list, cell_types, centre_circle=0.5, line_guide=False):
         bbox_props=dict(boxstyle='square,pad=0.3',fc ='w',ec='k',lw=0.92)
         kw=dict(xycoords='data',textcoords='data',arrowprops=dict(arrowstyle='-'),zorder=0,va='center')
 
-        fig1,ax1=plt.subplots(figsize=(20,13))
+        fig1,ax1=plt.subplots(figsize=(20,8))
         
         values=number_list
-        labels = [_celltype+'\n' + str(_value) + '%' for _celltype, _value in zip(cell_types, values)]
+        labels = [_celltype+'\n' + str(_value) + '' for _celltype, _value in zip(cell_types, values)]
         # Add code
         annotate_dict = zip(labels, values)
         annotate_dict_cp = zip(labels, values)
@@ -120,25 +122,31 @@ def piechart(number_list, cell_types, centre_circle=0.5, line_guide=False):
         centre_circle = plt.Circle((0,0),0.70,fc='white')
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
+        # add how many sample are there as text 
+        ax1.text(0, 0, str(sum(sizes)), ha='center', va='center', fontsize=30, weight='bold')
             
         
-        plt.savefig('piechart.png')
+        plt.savefig(image_name, dpi=300)
+
+'''
+Adenocarcinoma
+170
+Benign
+76
+Non-small cell carcinoma
+23
+Squamous cell carcinoma
+76
+Large cell carcinoma
+1
+'''
+
+
+number_list = [170, 76, 23, 76, 1]
+category_list = ['Adenocarcinoma', 'Benign', 'Non-small cell carcinoma', 'Squamous cell carcinoma', 'Large cell carcinoma']
 
 
 
-cell_types =['Myeloblast', 'Promyelocyte', 'Myelocyte','Metamyelocyte',
-                      "Band\nneutrophil", "Segmented\nneutrophil",
-                      'Eosinophil', 
-                     'Basophil', 'Monocyte', 'Lymphocyte', 'Plasma cell', 'Normoblast', 'Others']
-
-labelPadding = 1
-number_list = [9, 0,0,1,2,1, 1, 0, 1, 4, 0, 2,1]
-plot_circular_barchart(number_list, cell_types)
-# 12 number sum to 100
-number_list = [47,2,3,2, 7, 7, 3, 1, 4, 15, 2,6, 1]
-
-
-
-piechart(number_list, cell_types, centre_circle=0.8, line_guide=True)
+piechart(number_list, category_list, centre_circle=0.8, line_guide=True, image_name='Tumor_profiling.png')
 
 
